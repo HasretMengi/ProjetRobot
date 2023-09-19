@@ -25,16 +25,6 @@ public class RobotController : Controller
         _logger = logger;
         this.robotData = robotData;
     }
-    private bool IsCountryValid(string country)
-    {
-        // Convertir en minuscules pour ignorer la casse
-        string countryLower = country.ToLower();
-
-        // Convertir également la liste des pays en minuscules
-        var allowedCountriesLower = AllowedCountries.Select(c => c.ToLower());
-
-        return allowedCountriesLower.Contains(countryLower);
-    }
 
 
     public IActionResult WantedRobotList()
@@ -69,6 +59,7 @@ public class RobotController : Controller
         {
             return RedirectToAction("CountryError");
         }
+
         // Trouvez la valeur de l'ID la plus élevée actuellement utilisée
         int maxId = robotData.Robots.Max(r => r.Id);
 
@@ -158,8 +149,32 @@ public class RobotController : Controller
     public IActionResult SearchByCountry(string country)
     {
         var robots = robotData.GetRobotsByCountry(country);
+        if (IsCountryValid(country) == false)
+        {
+            return RedirectToAction("CountryError");
 
-        return View("WantedRobotList", robots);
+        }
+        else if (robots.Count == 0)
+        {
+            return View("SearchCountryError");
+        }
+        else { return View("WantedRobotList", robots); }
+
+    }
+
+    public IActionResult SearchCountryError()
+    {
+        return View();
+    }
+    private bool IsCountryValid(string country)
+    {
+        // Convertir en minuscules pour ignorer la casse
+        string countryLower = country.ToLower();
+
+        // Convertir également la liste des pays en minuscules
+        var allowedCountriesLower = AllowedCountries.Select(c => c.ToLower());
+
+        return allowedCountriesLower.Contains(countryLower);
     }
 
 }
