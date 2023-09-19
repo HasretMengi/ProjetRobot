@@ -1,0 +1,88 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Robot Wanted League</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/WantedRobots.styles.css" asp-append-version="true" />
+</head>
+
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container-fluid">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><img class="home-icon"
+                        src="https://static.thenounproject.com/png/417107-200.png"> Wanted Robots League</a>
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse"
+                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Robot"
+                                asp-action="WantedRobotList"><img class="nav-icons"
+                                    src="https://cdn-icons-png.flaticon.com/512/6433/6433996.png"> Liste</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Robot" asp-action="AddRobot"><img
+                                    class="nav-icons"
+                                    src="https://cdn.icon-icons.com/icons2/2761/PNG/512/plus_insert_add_rectangle_icon_176436.png">
+                                Ajouter
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Robot"
+                                asp-action="UpdateRobotPays"><img class="nav-icons"
+                                    src="https://creazilla-store.fra1.digitaloceanspaces.com/icons/3264660/update-icon-md.png">
+                                Mettre à jour
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Robot"
+                                asp-action="DeleteRobot"><img class="nav-icons"
+                                    src="https://cdn-icons-png.flaticon.com/512/1345/1345874.png"> Supprimer
+                            </a>
+                        </li>
+                        <li class="nav-item" style="margin-left: auto;">
+                            <form class="form-inline my-2 my-lg-0" asp-controller="Robot" asp-action="SearchByCountry"
+                                method="get">
+                                <div class="input-group">
+                                    <input class="form-control" type="search" placeholder="Rechercher par pays"
+                                        aria-label="Recherche" name="country">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-outline-success" type="submit">Rechercher</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </li>
+
+
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+
+
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+
+</html>

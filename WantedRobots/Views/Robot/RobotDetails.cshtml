@@ -1,0 +1,45 @@
+@model WantedRobots.Models.Robot
+<style>
+    h1 {
+        text-align: center;
+    }
+
+    h5 {
+        color: red;
+        font-weight: bolder;
+        text-decoration: underline;
+    }
+    .card-container {
+        max-width: 400px;
+        margin: 0 auto;
+    
+    }
+</style>
+<h1> Détails</h1>
+<div class="card-container">
+    <div class="card text-center mx-auto">
+        <img class="card-img-top" src="https://robohash.org/@Model.Nom" alt="Card image cap">
+        <div class="card-body">
+            <h5 class="card-title">WANTED</h5>
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item"><strong>ID :</strong> @Model.Id</li>
+            <li class="list-group-item"><strong>Nom :</strong> @Model.Nom</li>
+            <li class="list-group-item"><strong>Taille :</strong> @Model.Taille</li>
+            <li class="list-group-item"><strong>Poids :</strong> @Model.Poids </li>
+            <li class="list-group-item"><strong>Pays :</strong> @Model.Pays </li>
+            @if (Model.HistoriquePays != null && Model.HistoriquePays.Any())
+            {
+                <li class="list-group-item left-side"><strong>Historique des Pays :</strong> <ul>
+                    @foreach (var pays in Model.HistoriquePays)
+                    {
+                        <li>@pays</li>
+                    }
+                </ul></li>
+               
+            }
+
+            <a href="@Url.Action("WantedRobotList", "Robot")" class="btn btn-primary">Retour à la liste</a>
+        </ul>
+    </div>
+</div>

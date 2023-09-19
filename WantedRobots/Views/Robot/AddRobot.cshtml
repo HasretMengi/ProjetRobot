@@ -1,0 +1,46 @@
+<html>
+<head>
+    <link rel="stylesheet" href="~/css/site.css" />
+    <style>
+        body {
+            background-image: url("https://i.kinja-img.com/gawker-media/image/upload/c_fill,f_auto,fl_progressive,g_center,h_675,pg_1,q_80,w_1200/e9e30f184a3edb756194313019801691.jpg"); 
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .robot-form {
+            background-color: rgba(255, 255, 255,0.8);
+            padding: 20px;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <form method="post" action="ajout-robot" class="robot-form">
+        <h1>Ajouter un robot</h1><br>
+        <div class="form-group">
+            <label for="Nom">Nom</label>
+            <input type="text" name="Nom" class="form-control">
+        </div>
+        <div class="form-group">
+            <label for="Taille">Taille</label>
+            <input type="text" name="Taille" class="form-control">
+        </div>
+        <div class="form-group">
+            <label for="Poids">Poids</label>
+            <input type="text" name="Poids" class="form-control">
+        </div>
+        <div class="form-group">
+            <label for="Pays">Pays</label>
+            <input type="text" name="Pays" class="form-control">
+        </div><br>
+
+        <button type="submit" class="btn btn-success">Envoyer</button>
+    </form>
+</body>
+</html>

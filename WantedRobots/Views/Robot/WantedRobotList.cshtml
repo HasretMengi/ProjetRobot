@@ -1,0 +1,76 @@
+@model List<WantedRobots.Models.Robot>
+<html>
+<head>
+    <link rel="stylesheet" href="~/css/site.css" />
+    <style>
+        html, body {
+            height: 100%;
+        }
+        body {
+           background-color: #fae3c7;
+            background-size: cover;
+            background-position: center;
+            margin: 0;
+            justify-content: center;
+            align-items: center;
+        }
+        .card-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        margin-bottom: 20px;
+    }
+
+    .card {
+        width: calc(25% - 10px);
+        margin-bottom: 20px;
+        border: 1px solid #ccc;
+        box-sizing: border-box;
+        background-image: url("https://cdn.pixabay.com/photo/2015/12/03/08/50/paper-1074132_1280.jpg");
+    }
+    .list-group-item{
+        background-image: url("https://cdn.pixabay.com/photo/2015/12/03/08/50/paper-1074132_1280.jpg");
+        border: none;
+    }
+
+    #top-wanted{
+       text-align: center;
+    }
+    #top-wanted img {
+        width: 400px; 
+    }
+    .btn-primary {
+        margin:2%;
+        background-color: rgb(195, 94, 22);
+        border: white;
+    }
+     .btn-primary:hover {
+        background-color: rgb(95, 67, 32);
+    }
+
+       
+    </style>
+</head>
+
+
+<div id="top-wanted"><img src="https://images.vexels.com/media/users/3/249226/isolated/preview/e8f10cd25d283dcb3f19d5ec98369036-wanted-dead-or-alive-label.png"></div>
+
+
+<div class="card-container">
+    
+    @foreach (var robot in Model)
+    {
+        <div class="card text-center mx-auto">
+            <img class="card-img-top" src="https://www.pngall.com/wp-content/uploads/12/Wanted-Stamp-PNG-Image.png">
+            <img class="card-img-top" src="https://robohash.org/@robot.Nom" alt="Card image cap">
+            <div class="card-body">
+                <img class = "card-img" src="https://clipart-library.com/images/yckrderqi.png">
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item"><strong>ID : @robot.Id</strong> </li>
+                <li class="list-group-item"><strong>@robot.Nom</strong> </li>
+                <a href="@Url.Action("RobotDetails", "Robot", new { id = robot.Id })" class="btn btn-primary">Détails</a>
+            </ul>
+        </div>
+    }
+</div>

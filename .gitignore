@@ -138,7 +138,12 @@ appsettings.json
 appsettings.Development.json
 
 # Ignorer le dossier "js" et le dossier "lib" dans wwwroot
-WantedRobots/bin/Debug/net7.0
-
+WantedRobots/bin
+WantedRobots/Properties
+WantedRobots/wwwroot/js
+WantedRobots/wwwroot/lib
+WantedRobots/Views/Shared/_ValidationScriptsPartial.cshtml
+WantedRobots/Views/Shared/Error.cshtml
+WantedRobots/Views/_ViewImports.cshtml
 # Ignorer favicon.ico à la racine du projet
 favicon.ico

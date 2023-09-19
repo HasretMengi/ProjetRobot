@@ -1,0 +1,31 @@
+<html>
+<head>
+    <link rel="stylesheet" href="~/css/site.css" />
+    <style>
+        body {
+            background-image: url("https://i.kinja-img.com/gawker-media/image/upload/c_fill,f_auto,fl_progressive,g_center,h_675,pg_1,q_80,w_1200/e9e30f184a3edb756194313019801691.jpg"); 
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .robot-form {
+            background-color: rgba(255, 255, 255,0.8);
+            padding: 20px;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<form method="post" action="@Url.Action("DeleteRobot", "Robot")" class ="robot-form">
+    <h1>Supprimer un robot</h1>
+    <div class="form-group">
+        <label for="idRobot">ID du Robot :</label>
+        <input type="text" class="form-control" id="idRobot" name="idRobot">
+    </div><br>
+    
+    <button type="submit" class="btn btn-danger">Supprimer le robot</button>
+</form>
