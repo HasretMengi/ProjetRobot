@@ -5,6 +5,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddSingleton<IRobotData, RobotData>();
+builder.Services.AddSingleton<IAgentData, AgentData>();
 
 var app = builder.Build();
 
