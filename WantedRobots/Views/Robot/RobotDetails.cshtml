@@ -1,26 +1,59 @@
+@using WantedRobots.Models
 @model WantedRobots.Models.Robot
+
+
+@{
+    var agentData = ViewBag.AgentData as WantedRobots.Models.IAgentData;
+}
+
 <style>
-    h1 {
-        text-align: center;
+    body {
+        background-color: #fae3c7;
     }
 
-    h5 {
-        color: red;
-        font-weight: bolder;
-        text-decoration: underline;
+    .list-group-item, .card {
+        background-image: url("https://st3.depositphotos.com/5697382/12968/i/950/depositphotos_129685872-stock-photo-old-brown-paper-texture-background.jpg");
+        border: dashed  ;
+        font-weight: bold;
+        
     }
+
+    h1 {
+        text-align: center;
+        color: rgb(87, 6, 6);
+    }
+
+    .wanted-details {
+        width: 50%;
+    }
+
     .card-container {
         max-width: 400px;
         margin: 0 auto;
-    
+
+    }
+
+
+    select {
+        text-align: center;
+        width: 50%;
+        margin: auto;
+    }
+
+    #note,
+    #commentaire,
+    #agentId {
+        width: 50%;
+        margin: auto;
     }
 </style>
-<h1> Détails</h1>
+
 <div class="card-container">
     <div class="card text-center mx-auto">
+        <h1> Détails sur @Model.Nom</h1>
         <img class="card-img-top" src="https://robohash.org/@Model.Nom" alt="Card image cap">
         <div class="card-body">
-            <h5 class="card-title">WANTED</h5>
+            <img class="wanted-details" src="https://www.pngmart.com/files/7/Wanted-Stamp-PNG-Picture.png">
         </div>
         <ul class="list-group list-group-flush">
             <li class="list-group-item"><strong>ID :</strong> @Model.Id</li>
@@ -30,16 +63,102 @@
             <li class="list-group-item"><strong>Pays :</strong> @Model.Pays </li>
             @if (Model.HistoriquePays != null && Model.HistoriquePays.Any())
             {
-                <li class="list-group-item left-side"><strong>Historique des Pays :</strong> <ul>
-                    @foreach (var pays in Model.HistoriquePays)
-                    {
-                        <li>@pays</li>
-                    }
-                </ul></li>
-               
+                <li class="list-group-item left-side"><strong>Historique des Pays :</strong>
+                    <ul>
+                        @foreach (var pays in Model.HistoriquePays)
+                        {
+                            <li>@pays</li>
+                        }
+                    </ul>
+                </li>
+
             }
 
-            <a href="@Url.Action("WantedRobotList", "Robot")" class="btn btn-primary">Retour à la liste</a>
+
+            <!-- ... SECTION ASSIGNER UN AGENT  -->
+
+            <li class="list-group-item" >
+                <strong>Agent Assigné :</strong>
+                @if (Model.AgentId.HasValue)
+                {
+                    // Si un agent est assigné affichez bouton pour le retirer.
+                    var assignedAgent = agentData.GetAgentById(Model.AgentId.Value);
+                    <span>@assignedAgent.Nom</span>
+                    <form method="post" asp-controller="Robot" asp-action="UnassignAgent">
+                        <input type="hidden" name="robotId" value="@Model.Id" />
+                        <button type="submit" class="btn btn-danger">Retirer l'agent</button>
+                    </form>
+                }
+                else
+                {
+                    // Si aucun agent n'est assigné, attribuer un agent.
+                    var agents = agentData.Agents;
+                    <form method="post" asp-controller="Robot" asp-action="AssignAgent">
+                        <input type="hidden" name="robotId" value="@Model.Id" />
+                        <select name="agentId">
+                            @foreach (var agent in agents)
+                            {
+                                <option value="@agent.Id">@agent.Nom</option>
+                            }
+                        </select>
+                        <button type="submit" class="btn btn-success">Attribuer un agent</button>
+                    </form>
+                }
+            </li>
+
+            <!-- COMMENTAIRE DES AGENTS -->
+            <li class="list-group-item">
+                <p><strong>Commentaires des Agents :</strong></p>
+                @if (Model.Commentaires != null && Model.Commentaires.Any())
+                {
+                    <ul>
+                        @foreach (var commentaire in Model.Commentaires)
+                        {
+
+                            <strong><li class="list-group-item" class="comment">Agent @commentaire.AgentId</li>
+                            <li class="list-group-item">Commentaire: @commentaire.Commentaire</li>
+                            <li class="list-group-item"> Robot Danger Level : @commentaire.Note</li></strong>
+
+                            <br>
+                        }
+                    </ul>
+                }
+                else
+                {
+                    <p>Aucun commentaire disponible pour ce robot.</p>
+                }
+            </li>
+
+            <!-- FORMULAIRE DE COMMENTAIRES -->
+            <li class="list-group-item">
+                <p><strong>Soumettre un commentaire:</strong></p>
+                <form method="post" asp-controller="Robot" asp-action="SubmitComment">
+                    <input type="hidden" name="robotId" value="@Model.Id" />
+
+                    <div class="form-group">
+                        <label for="agentId"><strong>ID de l'agent :</strong></label>
+                        <input type="text" class="form-control" id="agentId" name="agentId" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="commentaire"><strong>Commentaire de l'agent :</strong></label>
+                        <textarea class="form-control" id="commentaire" name="commentaire" required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="note"><strong>Note sur 10 de la dangerosité du robot :</strong></label>
+                        <input type="number" class="form-control" id="note" name="note" min="0" max="10" required>
+                    </div><br>
+
+                    <button type="submit" class="btn btn-success">Soumettre</button>
+                </form>
+            </li><br>
+
+
+
+            <a href="@Url.Action("WantedRobotList", "Robot")" class="btn btn-primary">Retour à la liste</a><br>
+
+
         </ul>
     </div>
 </div>

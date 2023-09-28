@@ -5,6 +5,12 @@ namespace WantedRobots.Models;
 public class RobotData : IRobotData
 {
     private int _nextId = 4;
+    private readonly IAgentData _agentData;
+    public RobotData(IAgentData agentData)
+    {
+        _agentData = agentData;
+    }
+
     public List<Robot> Robots { get; } = new List<Robot>
         {
             new Robot
@@ -81,6 +87,55 @@ public class RobotData : IRobotData
     {
         return Robots.Where(r => string.Equals(r.Pays, country, StringComparison.OrdinalIgnoreCase)).ToList();
     }
+    public void AssignAgent(int robotId, int agentId)
+    {
+        var robot = GetRobotById(robotId);
+        var agent = _agentData.GetAgentById(agentId);
+
+        if (robot != null && agent != null)
+        {
+            robot.AgentId = agentId;
+            agent.RobotIds.Add(robotId);
+        }
+    }
+
+    public void UnassignAgent(int robotId)
+    {
+        var robot = GetRobotById(robotId);
+        if (robot != null)
+        {
+            robot.AgentId = null;
+        }
+    }
+
+    public void SubmitComment(int robotId, string agentId, string commentaire, int note)
+    {
+        var robot = GetRobotById(robotId);
+        var agent = _agentData.GetAgentById(int.Parse(agentId));
+
+        if (robot != null && agent != null)
+        {
+            // Créez un objet Comment pour stocker le commentaire et la note
+            var comment = new Comment
+            {
+                AgentId = agent.Id,
+                Commentaire = commentaire,
+                Note = note
+            };
+
+            // Assurez-vous que la liste des commentaires existe
+            if (robot.Commentaires == null)
+            {
+                robot.Commentaires = new List<Comment>();
+            }
+
+            // Ajoutez le commentaire à la liste des commentaires du robot
+            robot.Commentaires.Add(comment);
+        }
+
+    }
+
+
 
 
 }

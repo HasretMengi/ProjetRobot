@@ -9,6 +9,11 @@ namespace WantedRobots.Models
         public int Taille { get; set; }
         public int Poids { get; set; }
         public string? Pays { get; set; }
+        // ASSIGNER UN AGENT //
+        public int? AgentId { get; set; } 
+        // COMMENTAIRE DE L'AGENT //
+         public List<Comment>? Commentaires { get; set; } 
+        
 
         // Propriété statique pour suivre le prochain ID
         public static int NextId { get; private set; } = 4;
@@ -17,5 +22,5 @@ namespace WantedRobots.Models
        
     }
 
-    public record Robot2(int Id,string Nom, string UrlImage, int Taille,int Poids,string Pays);
+    
 }
