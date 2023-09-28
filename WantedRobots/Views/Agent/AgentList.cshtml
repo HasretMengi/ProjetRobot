@@ -1,10 +1,11 @@
 @model List<WantedRobots.Models.Agent>
+
+
 <html>
 
 <head>
     <link rel="stylesheet" href="~/css/site.css" />
     <style>
-        
         body {
             background-color: #b5b5b5;
             background-size: cover;
@@ -29,10 +30,15 @@
         }
 
 
-        .card-img{
-            width: 100px;
+        .card-img-top {
+            width: 50%;
+            margin: auto;
         }
 
+
+        .card-img {
+            width: 60%;
+        }
     </style>
 </head>
 
@@ -40,19 +46,20 @@
 
 
 <div class="card-container">
-
     @foreach (var agent in Model)
     {
         <div class="card text-center mx-auto">
-            <iframe class="card-img-top "  src="https://good-hawk-21.deno.dev/@agent.Nom"></iframe>
+            <iframe class="card-img-top" src="https://good-hawk-21.deno.dev/@agent.Nom"></iframe>
             <div class="card-body">
-                <img class="card-img" 
+                <img class="card-img"
                     src="https://www.ahabusinessconsulting.com/wp-content/uploads/2014/05/SS-LOGO-Certified-Agent-Grayscale-2-300x302.png">
             </div>
             <ul class="list-group list-group-flush">
                 <li class="list-group-item"><strong>ID : </strong>@agent.Id </li>
                 <li class="list-group-item"><strong>Nom: </strong> @agent.Nom</li>
                 <li class="list-group-item"><strong>Zone: </strong>@agent.Zone </li>
+                <!--... SECTION ROBOT  -->
+               
             </ul>
         </div>
     }

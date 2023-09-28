@@ -1,0 +1,39 @@
+<html>
+<head>
+    <link rel="stylesheet" href="~/css/site.css" />
+    <style>
+        body {
+            background-image: url("https://talbotspy.org/files/2020/09/dribbleadamkad_n_4x.jpg"); 
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .robot-form {
+            background-color: rgba(255, 255, 255,0.8);
+            padding: 20px;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <form method="post" action="ajout-agent" class="agent-form">
+        <h1>Ajouter un agent</h1><br>
+        <div class="form-group">
+            <label for="Nom">Nom</label>
+            <input type="text" name="Nom" class="form-control">
+        </div>
+       
+        <div class="form-group">
+            <label for="Zone">Zone</label>
+            <input type="text" name="Zone" class="form-control">
+        </div><br>
+
+        <button type="submit" class="btn btn-success">Envoyer</button>
+    </form>
+</body>
+</html>

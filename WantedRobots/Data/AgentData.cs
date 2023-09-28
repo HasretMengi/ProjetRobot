@@ -4,7 +4,7 @@ namespace WantedRobots.Models;
 
 public class AgentData : IAgentData
 {
-    private int _nextId = 4;
+    private int _nextId = 1004;
 
      // Initialisez la liste AgentRobotLinks dans le constructeur
    
@@ -12,21 +12,21 @@ public class AgentData : IAgentData
         {
             new Agent
                 {
-                   Id = 1,
+                   Id = 1001,
                    Nom = "Killer",
                    UrlImage = "https://good-hawk-21.deno.dev/Killer",
                    Zone = "Canada"
                 },
                 new Agent
                 {
-                    Id = 2,
+                    Id = 1002,
                     UrlImage = "https://good-hawk-21.deno.dev/Exterminator",
                     Nom = "Exterminator",
                     Zone = "Maroc"
                 },
                 new Agent
                 {
-                    Id = 3,
+                    Id = 1003,
                     UrlImage = "https://good-hawk-21.deno.dev/Reaper",
                     Nom = "Reaper",
                     Zone = "Palestine"
@@ -40,9 +40,12 @@ public class AgentData : IAgentData
         _nextId++;
     }
 
-    
-
-
+    public Agent GetAgentById(int idAgent)
+    {
+        // Recherchez le robot par son ID dans la liste
+        var agent = Agents.FirstOrDefault(r => r.Id == idAgent);
+        return agent;
+    }
 
 
 }

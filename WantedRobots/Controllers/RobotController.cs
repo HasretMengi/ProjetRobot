@@ -19,11 +19,13 @@ public class RobotController : Controller
 
     private readonly ILogger<RobotController> _logger;
     private readonly IRobotData robotData;//
+    private readonly IAgentData agentData;//
 
-    public RobotController(ILogger<RobotController> logger, IRobotData robotData)
+    public RobotController(ILogger<RobotController> logger, IRobotData robotData, IAgentData agentData)
     {
         _logger = logger;
         this.robotData = robotData;
+        this.agentData = agentData;
     }
 
 
@@ -33,14 +35,18 @@ public class RobotController : Controller
         return View(robots);
     }
 
-    public ActionResult RobotDetails(int id)
+    public IActionResult RobotDetails(int id)
     {
-        // Recherchez le robot par son nom dans la liste
+        // Recherchez le robot par son ID dans la liste
         var robot = robotData.GetRobotById(id);
         if (robot == null)
         {
             return NotFound();
         }
+
+        // Stockez agentData dans ViewBag
+        ViewBag.AgentData = agentData;
+
         return View(robot);
     }
 
@@ -134,10 +140,9 @@ public class RobotController : Controller
     [HttpPost]
     public IActionResult DeleteRobot(int idRobot)
     {
-        // Appelez la méthode de mise à jour dans RobotData avec l'ID
+
         robotData.DeleteRobot(idRobot);
 
-        // Redirigez l'utilisateur vers la page de détails du robot mis à jour
         return RedirectToAction("WantedRobotList");
     }
 
@@ -148,6 +153,7 @@ public class RobotController : Controller
 
     public IActionResult SearchByCountry(string country)
     {
+        
         var robots = robotData.GetRobotsByCountry(country);
         if (IsCountryValid(country) == false)
         {
@@ -168,14 +174,50 @@ public class RobotController : Controller
     }
     private bool IsCountryValid(string country)
     {
-        // Convertir en minuscules pour ignorer la casse
+        // Convertir arg en minuscules
         string countryLower = country.ToLower();
 
-        // Convertir également la liste des pays en minuscules
+        // Convertir la liste des pays en minuscules
         var allowedCountriesLower = AllowedCountries.Select(c => c.ToLower());
 
         return allowedCountriesLower.Contains(countryLower);
     }
+
+    // ... ASSIGNER UN AGENT ... //
+
+    [HttpPost]
+    public IActionResult AssignAgent(int robotId, int agentId)
+    {
+        robotData.AssignAgent(robotId, agentId);
+        return RedirectToAction("RobotDetails", new { id = robotId });
+    }
+
+    [HttpPost]
+    public IActionResult UnassignAgent(int robotId)
+    {
+       robotData.UnassignAgent(robotId);
+       return RedirectToAction("RobotDetails", new { id = robotId });
+        
+    }
+
+    // ... COMMENTAIRE DES AGENTS ... // 
+    [HttpPost]
+    public IActionResult SubmitComment(int robotId, string agentId, string commentaire, int note)
+    {
+        robotData.SubmitComment(robotId,agentId,commentaire,note);
+        var robot = robotData.GetRobotById(robotId);
+        var agent = agentData.GetAgentById(int.Parse(agentId));
+
+        if (robot != null && agent != null)
+        {
+            return RedirectToAction("RobotDetails", new { id = robotId });
+        }
+        return View("Impostor");
+    }
+
+
+
+
 
 }
 

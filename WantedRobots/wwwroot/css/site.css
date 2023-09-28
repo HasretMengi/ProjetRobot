@@ -20,7 +20,7 @@ html {
 body {
   margin-bottom: 60px;
 }
-.robot-form{
+.robot-form, .agent-form{
   border: 1px rgb(95, 58, 0) solid;
   background-color: white;
   padding:2%;
