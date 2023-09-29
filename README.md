@@ -1,4 +1,9 @@
-# ProjetRobot
+# ProjetRobot by Hasret Mengi & Salma Bendiabdallah
+
+## Run project command on hot reload
+- dotnet watch  --project WantedRobots
+## Test project command
+- dotnet test
 
 ## Pages d'erreur :
 1. Si on rentre n'importe quoi pour le pays = Erreur de pays
